@@ -1,7 +1,7 @@
 import numpy as np
 import copy
 
-def cycles_number(graph, r_matching):
+def maximal_decompositions(graph, r_matching):
     n = len(graph)
     num = 0
     gr = copy.deepcopy(graph)
@@ -18,8 +18,6 @@ def cycles_number(graph, r_matching):
             gr[j][j] = 0
             ans.append("{}{}".format(i,j))
             num += 1
-
-   
     Gr = Graph(gr, r_matching)
     Gr.decompose()
     t, c = Gr.cycle_size, Gr.decompositons
