@@ -8,8 +8,8 @@ contracted (A^3,B)-alternating graphs:
 
 ~~~
 python adequate.py -l 6 -A 3 -B 1 \
-	-m matchings\6.txt\
-	-ad adequates\4.txt/ \
+	-m matchings/6.txt \
+	-ad adequates/4.txt
 ~~~
 * `-h` --help show this help message and exit
 * `-l`        size of subgraphs
