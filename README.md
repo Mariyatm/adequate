@@ -20,4 +20,4 @@ python adequate.py -l 6 -A 3 -B 1 \
 
 ### Output description
 * `graphs.txt` all simple adequate graphs of order l. The graphs represent as adjacency matrices where A-edges have weight 1 and B-edges have weight 2.
-* `graphs.tex` all simple adequate graphs of order l in tex format. 
+* `graphs.tex` all simple adequate graphs of order l in the tex format. 
