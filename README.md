@@ -19,5 +19,6 @@ python adequate.py -l 6 -A 3 -B 1 \
 * `-ad`       path to file with adequate graphs with size <l
 
 ### Output description
+* `n` the number of simple adequatte graphs of order l.
 * `graphs.txt` all simple adequate graphs of order l. The graphs represent as adjacency matrices where A-edges have weight 1 and B-edges have weight 2.
 * `graphs.tex` all simple adequate graphs of order l in the tex format. 
