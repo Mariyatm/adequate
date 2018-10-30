@@ -14,7 +14,7 @@ def dfs(graph, start):
         if vertex not in visited:
             visited.append(vertex)
             for i in range(len(graph)):
-                if i not in visited and graph[vertex][i]>0:
+                if i not in visited and graph[vertex][i] != 0:
                     stack.append(i)
     return visited
  
@@ -68,12 +68,16 @@ def make_abgraph(gr, matching):
 
 def is_сontains_adequate_subgraphs(gr, matching, ad_index):
     n = len(gr)
+    graph = make_abgraph(gr,matching)
+    if len(dfs(graph,0)) != len(graph): #is conneccted
+        return True
+    if not filter1(graph):
+        return True
+    if len(adequates[ad_index]) == 0:
+        return False
     a_size = len(adequates[ad_index][0])
     if a_size == 0:
         return False
-    graph = make_abgraph(gr,matching)
-    if (not filter1(graph)):
-        return True
     permutations = itertools.permutations([i for i in range(n)], a_size)
     for perm in permutations:
         for agraph in adequates[ad_index]:
@@ -207,11 +211,9 @@ def ABcycles(graph):
                     graphB[i][bmatching[i]] = 1
                     graphB[bmatching[i]][i] = 1
                 cycB = cycles_number(graphB,matchings[num_mR])[0]
-            if cycA + cycB >= (a_dupl+b_dupl)*size/4:
+            if cycA + cycB >= (a_dupl + b_dupl) * size / 4:
                 is_cont = False
                 for idx in range(len(adequates)):
-                    if len(adequates[idx]) == 0:
-                        break
                     if is_сontains_adequate_subgraphs(graph, bmatching, idx):
                         is_cont = True
                         break
@@ -222,6 +224,7 @@ def ABcycles(graph):
         AB_graphs = []
         for el in Bgraphs:
             ab_graph = make_abgraph(graph, bmatchings[el])
+        
             is_OK = True
             for gr in AB_graphs:
                 if is_isomorhic(ab_graph, gr, 0):
@@ -237,7 +240,7 @@ def ABcycles(graph):
                     continue
                 #print(ab_graph)
                 write_graph(ab_graph,graph_file)
-                draw_tex(ab_graph, tex_file, 4);
+                draw_tex(ab_graph, tex_file, 5);
                 AB_graphs.append(ab_graph)
 
 
@@ -260,9 +263,14 @@ def draw_tex(graph, file,  columns_number):
         file.write("\\\\ \n \\\\ \n")
     else:
         file.write("&\n")
-    file.write("\\begin{tikzpicture}[scale=1.3, baseline] \n" +
-        "\\foreach \pos/\\name/\weight in {{(0, 0)/0/}, {(0,1)/1/}, {(1,1)/2/}, {(1,0)/3/}}\n\t"
-        "\\node[vertex] (\\name) at \pos {\weight};\n")
+
+    vertices = ["{{(0, 0)/0/}, {(0,1)/1/}, {(1,1)/2/}, {(1,0)/3/}}",
+    "{{(0, 0)/0/}, {(1,1.5)/1/}, {(2,1.5)/2/}, {(3,0)/3/}, {(2,-1.5)/4/}, {(1,-1.5)/5/}}",
+    "{{(1,0)/0/}, {(2,0)/1/}, {(3,1)/2/}, {(3,2)/3/}, {(2,3)/4/}, {(1,3)/5/},{(0,2)/6/}, {(0,1)/7/}"]
+
+    file.write("\\begin{tikzpicture}[scale=0.5, baseline] \n" +
+        "\\foreach \pos/\\name/\weight in" + vertices[int(size/2-2)] +
+        "\n\t\\node[vertex] (\\name) at \pos {\weight};\n")
     #file.write(start_strings)
     file.write("\\foreach \source/ \dest in {")
     A_edges = ""
@@ -393,3 +401,4 @@ while (counts[0] < a_dupl):
     A_forms = []
     run(0, graph, counts, A_forms)
 print(num)
+
