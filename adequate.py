@@ -188,8 +188,12 @@ def next(count, k):
     count[0] = k+1
     return count
 
-
+numAB = 0
 def ABcycles(graph):
+    global numAB
+    
+    #print("!",counts)
+    numAB += 1
     Bgraphs = set()
     for num_mR in range(len(matchings)):
         cycA = cycles_number(graph,matchings[num_mR])[0]
@@ -298,6 +302,7 @@ def draw_tex(graph, file,  columns_number):
     num += 1
 
 def run(v, graph, counts, A_forms, prev=None):
+
     if prev is None:
         prev = v-1
     if v == len(graph):
@@ -309,6 +314,11 @@ def run(v, graph, counts, A_forms, prev=None):
                     break
             if is_cotinue:
                 A_forms.append(copy.deepcopy(graph))
+                num_gr = 0
+                for i in range(len(graph)):
+                    for j in range(len(graph)):
+                        num_gr += int(graph[i][j])
+                #print(int(num_gr/2))
                 ABcycles(graph)
         return 
     if counts[v] <= 0:
@@ -392,13 +402,23 @@ adequates = read_adequates(args.ad)
 graph  = [[0 for i in range(size)] for j in range(size)]
 A_forms = []
 counts = np.ones(size) * 0
+# counts = [0 for i in range(size)]
+for i in range(size):
+    if i > size/2:
+        counts[i] = 1 
 
 tex_file = open("graphs.tex", "w")
 graph_file = open("graphs.text", "w")
 
-while (counts[0] < a_dupl):   
-    counts = next(counts, a_dupl)
+numAB = 0
+while (counts[0] < a_dupl): 
+    counts = next(counts, a_dupl)  
+    sum_counts = 0
+    for i in counts:
+        sum_counts += int(i)
+    if sum_counts  < len(counts) - 1 or check(counts):
+        continue
     A_forms = []
+    #print(counts)
     run(0, graph, counts, A_forms)
 print(num)
-
