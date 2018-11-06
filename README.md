@@ -1,5 +1,5 @@
 ### Adequate
-adequate.py is a tool for the generation of simple adequate subgraphs of small order that may appear in a stripped
+adequate.py is a tool for the generation of simple adequate subgraphs of small order >2 that may appear in a stripped
 contracted (A,B)-alternating graphs.
 ### Usage example
 
